@@ -1,0 +1,6 @@
+@CibersegurancaAPI_V1_SemProtecao_HostAddress = http://localhost:5273
+
+GET {{CibersegurancaAPI_V1_SemProtecao_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
