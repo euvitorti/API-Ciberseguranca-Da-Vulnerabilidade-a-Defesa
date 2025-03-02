@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\CibersegurancaAPI_V1_SemProtecao.props" />
+</Project>

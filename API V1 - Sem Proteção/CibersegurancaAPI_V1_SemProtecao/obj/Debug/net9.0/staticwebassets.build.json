@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Hrgut8sJlBYhqK3dy40GPUCha0ct5GJki4lv0lYxc8E=",
+  "Source": "CibersegurancaAPI_V1_SemProtecao",
+  "BasePath": "_content/CibersegurancaAPI_V1_SemProtecao",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

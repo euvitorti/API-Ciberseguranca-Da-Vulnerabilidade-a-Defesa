@@ -80,11 +80,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\cyber\\API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\\API Cibersegurança V1 - Sem Proteção\\CibersegurancaAPI_V1_SemProtecao\\CibersegurancaAPI_V1_SemProtecao.csproj",
+      "projectUniqueName": "C:\\cyber\\API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\\API V1 - Sem Proteção\\CibersegurancaAPI_V1_SemProtecao\\CibersegurancaAPI_V1_SemProtecao.csproj",
       "projectName": "CibersegurancaAPI_V1_SemProtecao",
-      "projectPath": "C:\\cyber\\API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\\API Cibersegurança V1 - Sem Proteção\\CibersegurancaAPI_V1_SemProtecao\\CibersegurancaAPI_V1_SemProtecao.csproj",
+      "projectPath": "C:\\cyber\\API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\\API V1 - Sem Proteção\\CibersegurancaAPI_V1_SemProtecao\\CibersegurancaAPI_V1_SemProtecao.csproj",
       "packagesPath": "C:\\Users\\ludim\\.nuget\\packages\\",
-      "outputPath": "C:\\cyber\\API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\\API Cibersegurança V1 - Sem Proteção\\CibersegurancaAPI_V1_SemProtecao\\obj\\",
+      "outputPath": "C:\\cyber\\API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\\API V1 - Sem Proteção\\CibersegurancaAPI_V1_SemProtecao\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ludim\\AppData\\Roaming\\NuGet\\NuGet.Config"
