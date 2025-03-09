@@ -1,4 +1,4 @@
-using AP2_V2.Users.Models;
+using API_V2.Users.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_V2.Data

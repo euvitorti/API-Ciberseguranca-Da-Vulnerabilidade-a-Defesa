@@ -1,34 +1,33 @@
-// using AP2_V2.Users.Dto;
-// using AP2_V2.Users.Models;
-// using AP2_V2.Users.Repository;
-// using API_V2.Data;
-// using Microsoft.EntityFrameworkCore;
+using API_V2.Users.Dto;
+using API_V2.Users.Repository;
+using API_V2.Users.Models;
 
-// namespace AP2_V2.Users.Services
-// {
-//     public class UserService : IUserRepository
-//     {
-//         private readonly ApplicationDbContext applicationDbContext;
+namespace API_V2.Users.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly IUserRepository _userRepository;
 
-//         public UserService(ApplicationDbContext applicationDbContext)
-//         {
-//             this.applicationDbContext = applicationDbContext;
-//         }
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
-//         public async Task RegisterAsync(RegisterDto registerDto)
-//         {
-//             if (await applicationDbContext.Users.AnyAsync(u => u.Email == registerDto.Email))
-//                 throw new Exception("User exists in our system.");
+        public async Task RegisterUser(RegisterDto registerDto)
+        {
+            if (string.IsNullOrWhiteSpace(registerDto.Email))
+                throw new Exception("Email is required!");
 
-//             var user = new User
-//             {
-//                 Name = registerDto.Name,
-//                 Password = registerDto.Password,
-//                 Email = registerDto.Email
-//             };
+            if (registerDto.Password.Length < 6)
+                throw new Exception("Password must be at least 6 characters!");
 
-//             applicationDbContext.Users.Add(user);
-//             await applicationDbContext.SaveChangesAsync();
-//         }
-//     }
-// }
+            // Aqui poderiam ter mais regras de negócio
+            await _userRepository.RegisterAsync(registerDto); // Chama o Repository
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _userRepository.GetAllUsersAsync();
+        }
+    }
+}

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace AP2_V2.Users.Models
+namespace API_V2.Users.Models
 {
     [Index(nameof(Email), IsUnique = true)]
     public class User
