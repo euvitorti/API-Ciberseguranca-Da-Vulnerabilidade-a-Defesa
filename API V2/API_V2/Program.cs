@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Obtém a string de conexão do appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
+// Verifica se a string de conexão foi encontrada e não está vazia
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("Connection string 'MySqlConnection' is missing or empty.");
@@ -18,13 +19,14 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// Registra os repositórios e demais serviços
+// Registra os repositórios e demais serviços com o ciclo de vida Scoped
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Adiciona suporte a controllers
 builder.Services.AddControllers();
-// Adiciona o Swagger
+
+// Adiciona Swagger para documentação da API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -34,9 +36,10 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
+
 var app = builder.Build();
 
-// Habilita o Swagger na aplicação
+// Habilita o Swagger apenas em ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,5 +50,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapControllers(); // Aqui é onde a mágica acontece!
+// Mapeia os controllers para as rotas
+app.MapControllers();
+
+// Inicia a aplicação
 app.Run();

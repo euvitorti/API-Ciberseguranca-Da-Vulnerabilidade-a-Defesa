@@ -10,6 +10,7 @@ Esta é a primeira versão da API, gerada com o comando:
     dotnet add package MySql.EntityFrameworkCore
     dotnet add package Microsoft.EntityFrameworkCore.Design
     dotnet add package Pomelo.EntityFrameworkCore.MySql
+    dotnet add package Swashbuckle.AspNetCore
 ```
 
 Nesta versão, a API é muito básica e não possui nenhuma implementação de autenticação, validação ou outras medidas de segurança. O objetivo aqui é estabelecer uma base para os testes e, posteriormente, implementar melhorias de segurança.
