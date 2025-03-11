@@ -108,8 +108,7 @@ Estou utilizando um ambiente híbrido com Windows e Kali Linux rodando em máqui
 
 Estou seguindo o [Roadmap de Cyber Security Expert](https://roadmap.sh/cyber-security) e os desafios do [TryHackMe](https://tryhackme.com/). Se você quiser acompanhar meu progresso e aprendizado, confira também os repositórios onde documentei meus conhecimentos:
 
-1. [Cyber-Security-Expert-PT](https://github.com/euvitorti/Cyber-Security-Expert)
-2. [Try-Hack-Me-PT](https://github.com/euvitorti/Try-Hack-Me)
+1. [Cyber-Security-Expert-PT](https://github.com/euvitorti/Cyber-Security-Expert-PT)
 
 ---
 
