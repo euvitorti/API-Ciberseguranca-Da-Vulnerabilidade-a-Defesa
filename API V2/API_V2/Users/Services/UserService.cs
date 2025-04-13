@@ -30,9 +30,9 @@ namespace API_V2.Users.Services
         }
 
         // Recupera todos os usuários de forma assíncrona.
-        public async Task<List<User>> GetAllUsersAsync()
-        {
-            return await _userRepository.GetAllUsersAsync();
-        }
+        // public async Task<List<User>> GetAllUsersAsync()
+        // {
+        //     return await _userRepository.GetAllUsersAsync();
+        // }
     }
 }

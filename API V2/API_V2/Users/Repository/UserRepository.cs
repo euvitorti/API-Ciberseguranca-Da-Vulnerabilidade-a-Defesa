@@ -33,11 +33,5 @@ namespace API_V2.Users.Repository
             _context.Users.Add(user); // Adiciona o usuário ao contexto
             await _context.SaveChangesAsync(); // Persiste as mudanças no banco de dados
         }
-
-        // Retorna todos os usuários cadastrados
-        public async Task<List<User>> GetAllUsersAsync()
-        {
-            return await _context.Users.ToListAsync();
-        }
     }
 }

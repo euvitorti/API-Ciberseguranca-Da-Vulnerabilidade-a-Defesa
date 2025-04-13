@@ -4,14 +4,14 @@ namespace API_V2.Users.Dto
 {
     public class RegisterDto
     {
-        [Required(ErrorMessage = "O nome de usuário é obrigatório.")]
+        [Required(ErrorMessage = "User's name is required.")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "A senha é obrigatória.")]
+        [Required(ErrorMessage = "User's password is required.")]
         public string Password { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "O e-mail é obrigatório.")]
-        [EmailAddress(ErrorMessage = "E-mail inválido.")]
+        [Required(ErrorMessage = "User's email is required")]
+        [EmailAddress(ErrorMessage = "Email format invalid.")]
         public string Email { get; set; } = string.Empty;
     }
 }

@@ -5,6 +5,5 @@ namespace API_V2.Users.Repository
 {
     public interface IUserRepository{
         Task RegisterAsync(RegisterDto registerDto);
-        Task<List<User>> GetAllUsersAsync();
     }
 }

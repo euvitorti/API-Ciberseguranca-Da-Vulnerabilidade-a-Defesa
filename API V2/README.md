@@ -1,153 +1,84 @@
-# Versão 2: Salvar usuário e ataque Sql Injection
+# Versão 2: Salvar Usuário, HTTP Sem TLS/SSL
 
-Esta é a primeira versão da API, gerada com o comando:
-
-```
-    dotnet new webapi -n NomeDaApi
-    dotnet add package MySql.Data
-    dotnet add package Microsoft.EntityFrameworkCore
-    dotnet tool install --global dotnet-ef
-    dotnet add package MySql.EntityFrameworkCore
-    dotnet add package Microsoft.EntityFrameworkCore.Design
-    dotnet add package Pomelo.EntityFrameworkCore.MySql
-    dotnet add package Swashbuckle.AspNetCore
-```
-
-Nesta versão, a API é muito básica e não possui nenhuma implementação de autenticação, validação ou outras medidas de segurança. O objetivo aqui é estabelecer uma base para os testes e, posteriormente, implementar melhorias de segurança.
+Esta é a segunda versão da API, cujo objetivo principal é analisar como os dados são transmitidos sem o uso de TLS/SSL. Nesta etapa, a API realiza o registro de usuários e é testada quanto à segurança na transmissão dos dados, utilizando ferramentas como cURL para enviar requisições e Wireshark para interceptação e análise do tráfego HTTP em texto claro.
 
 ---
 
-## Configuração Inicial e Acesso Remoto
+## Introdução
 
-Por padrão, a API gerada pelo .NET utiliza o Kestrel como servidor web e é configurada para escutar apenas no localhost (127.0.0.1). Isso significa que, inicialmente, a API não está acessível a partir de outras máquinas, como uma VM Kali, na mesma rede.
+Nesta versão, a API foi configurada para operar via HTTP puro, sem qualquer camada de criptografia. O foco deste estágio é:
 
-### Por que Configurar o Kestrel para Escutar em Todas as Interfaces?
+- **Entender a transmissão de dados sem criptografia:**  
+  Analisar, com o auxílio do Wireshark, como dados sensíveis (nome, senha e email) são enviados em texto claro, evidenciando os riscos de segurança.
 
-Para que a API seja acessível de fora da máquina local (por exemplo, a partir da VM Kali), é necessário que ela escute em todas as interfaces de rede. Dessa forma, a API passará a responder por meio do IP de rede (no nosso caso, algo como 192.168.56.X), e não apenas no localhost.
-
----
-
-## Como Configurar
-
-No arquivo Program.cs (ou Startup.cs, dependendo da versão do .NET), você deve configurar o Kestrel para ouvir em todas as interfaces. Por exemplo, para .NET 5 ou superior, adicione a seguinte configuração:
-
-```
-    // Configura o Kestrel para escutar em todas as interfaces na porta 5000
-    builder.WebHost.ConfigureKestrel(options =>
-    {
-        options.Listen(System.Net.IPAddress.Any, 5000); // Substitua 5000 pela porta desejada
-    });
-```
-
-Essa configuração garante que a API fique acessível externamente através do IP de rede da máquina (por exemplo, 192.168.56.1) e na porta especificada (neste exemplo, 5000).
+- **Testar a vulnerabilidade a ataques:**  
+  Simular um cenário onde um atacante, com acesso à rede, pode interceptar e visualizar dados sensíveis.
 
 ---
 
-## Testes de Reconhecimento a Partir do Kali
+## Desenvolvimento
 
-1. Passo 1: Obter o IP do Windows
+### Dependências
 
-No Windows, execute o comando ipconfig para identificar o IP da interface de rede usada na comunicação com a VM (por exemplo, 192.168.56.1).
+Antes de iniciar a aplicação, restaure os pacotes do projeto com o seguinte comando:
 
-2. Passo 2: Testar com Nmap
-
-No Kali, execute o seguinte comando para verificar se a porta 5000 está aberta:
-
+```bash
+    dotnet restore
 ```
-    nmap -p 5000 192.168.56.1
-```
-
-3. Saída de exemplo:
-
-```
-    Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-03-01 16:03 -03
-    Nmap scan report for 192.168.56.1
-    Host is up (0.0055s latency).
-
-    PORT     STATE SERVICE
-    5000/tcp open  upnp
-    MAC Address: XX:XX:XX:XX:XX:XX (Unknown)
-
-    Nmap done: 1 IP address (1 host up) scanned in 13.89 seconds
-```
-
-*Observações:*
-
-- A porta 5000 está aberta e o Nmap a identifica como utilizando o serviço upnp?. O "?" indica que o Nmap não tem 100% de certeza sobre o serviço.
-- O endereço MAC aparece, mas como se trata de uma máquina virtual, o fabricante pode aparecer como Unknown.
-
-4. Comando Detalhado
-
-Para obter uma análise mais aprofundada, use o comando com a opção -A:
-
-```
-    nmap -A -p 5000 192.168.56.1
-```
-
-Saída detalhada de exemplo:
-
-```
-    Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-03-01 16:04 -03
-    Nmap scan report for 192.168.56.1
-    Host is up (0.0013s latency).
-
-    PORT     STATE SERVICE VERSION
-    5000/tcp open  upnp?
-    | fingerprint-strings: 
-    |   DNSStatusRequestTCP, DNSVersionBindReqTCP, Help, RPCCheck, SMBProgNeg, SSLSessionReq, TerminalServerCookie, ZendJavaBridge: 
-    |     HTTP/1.1 400 Bad Request
-    |     Content-Length: 0
-    |     Connection: close
-    |     Date: Sun, 02 Mar 2025 13:28:21 GMT
-    |     Server: Kestrel
-    |   GetRequest: 
-    |     HTTP/1.1 404 Not Found
-    |     Content-Length: 0
-    |     Connection: close
-    |     Date: Sun, 02 Mar 2025 13:28:19 GMT
-    |     Server: Kestrel
-    |   HTTPOptions: 
-    |     HTTP/1.1 404 Not Found
-    |     Content-Length: 0
-    |     Connection: close
-    |     Date: Sun, 02 Mar 2025 13:28:21 GMT
-    |     Server: Kestrel
-    |   RTSPRequest: 
-    |     HTTP/1.1 505 HTTP Version Not Supported
-    |     Content-Length: 0
-    |     Connection: close
-    |     Date: Sun, 02 Mar 2025 13:28:21 GMT
-    |_    Server: Kestrel
-    ...
-    MAC Address: XX:XX:XX:XX:XX:XX (Unknown)
-    Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
-    Device type: general purpose
-    Running (JUST GUESSING): Microsoft Windows 11|10 (91%), FreeBSD 6.X (88%)
-    ...
-    Network Distance: 1 hop
-```
-
-5. Interpretação dos Resultados do Nmap
-
-- Informações Básicas: Host is up (0.0013s latency): O host está ativo e responde rapidamente na rede local.
-- PORT 5000/tcp open upnp?: A porta 5000 está aberta. O Nmap sugere UPnP, mas não tem certeza; isso se deve ao fato de o Kestrel responder com mensagens HTTP padrão.
-- Server: Kestrel: Indica que o servidor HTTP é o Kestrel, comumente usado em aplicações ASP.NET Core.
-- Respostas HTTP: 400 Bad Request, 404 Not Found, 505 HTTP Version Not Supported: O Nmap testou várias requisições. Essas respostas indicam que a API está ativa, mas os endpoints requisitados não foram encontrados ou a requisição não foi entendida — comportamento esperado em uma API mínima sem endpoints definidos além dos padrões.
-- Possível Sistema Operacional: O Nmap tenta adivinhar o SO (como Windows 10/11 ou até FreeBSD) com base nos padrões de resposta. Isso auxilia no reconhecimento do ambiente.
-- Network Distance: 1 hop: O host está na mesma rede local, sem intermediários, facilitando o teste e a análise.
-
-6. Como essas informações são utilizadas:
-
-- Reconhecimento: Identificar o tipo de servidor e sistema operacional ajuda a entender a infraestrutura e potenciais pontos de ataque.
-- Testes de Segurança: Saber quais portas estão abertas e como os serviços respondem é fundamental para identificar vulnerabilidades.
-- Análise de Servidor: Confirmar que o servidor é o Kestrel e que a API está acessível via IP de rede valida que as configurações estão corretas para os próximos testes.
 
 ---
 
-## Conclusão
+## Endpoints e Implementação
 
-Nesta primeira versão, a API foi gerada de forma básica e configurada para ser acessível externamente ajustando o Kestrel para escutar em todas as interfaces (0.0.0.0). Os testes realizados com o Nmap confirmam que a porta 5000 está aberta e que o servidor responde conforme esperado, apesar de retornar erros HTTP padrão (400, 404, 505) — um comportamento normal para uma API inicial sem endpoints específicos implementados.
+A API possui apenas um endpoint principal definido na classe UserController.cs na pasta User/Controllers. Nesta versão, o endpoint de registro do usuário é utilizado para demonstrar a transmissão de dados sensíveis.
 
-Esta versão serve como base para futuras iterações, onde serão implementadas melhorias de segurança, novos endpoints e funcionalidades, permitindo uma análise contínua e aprimoramento da segurança da API.
+### Testando o Endpoint
+
+- **Requisição com cURL**
+
+1. Esteja rodando na máquina hospedeira o projeto e no seu ambiente linux, rode o comando:
+
+```
+    curl -X POST http://192.168.56.1:5000/api/user/register \
+    -H "Content-Type: application/json" \
+    -d '{"name":"kali","password":"kali123","email":"naoexiste@gmail.com"}'
+```
+
+Este comando simula uma requisição de registro de usuário, enviando dados sensíveis (nome, senha, email) em formato JSON por HTTP.
+
+---
+
+## Interceptação e Análise com Wireshark
+
+- **Configuração do Wireshark:** No Kali Linux, abra o Wireshark e selecione a interface de rede utilizada para a comunicação com o host (ex.: eth0).
+
+- **Aplicação do Filtro:** Utilize o filtro http para capturar apenas os pacotes relevantes.
+
+- **Observação dos Dados:** Execute a requisição via cURL e analise os pacotes interceptados. Você poderá visualizar os dados enviados em texto claro, evidenciando:
+    - Nome do usuário
+    - Senha
+    - Email
+
+- **Risco Detectado:** Como os dados trafegam sem nenhuma proteção, qualquer pessoa com acesso à rede pode interceptar e visualizar informações confidenciais.
+
+---
+
+## Relatório: Lições Aprendidas
+
+- **Transmissão sem Criptografia é Arriscada:** A análise demonstrou que, sem a proteção de TLS/SSL, dados sensíveis trafegam em texto claro e podem ser facilmente comprometidos.
+
+- **Importância dos Testes com Wireshark:** O uso do Wireshark permitiu visualizar, em tempo real, como os dados são transmitidos, corroborando a necessidade de um canal seguro.
+
+- **Iteratividade no Desenvolvimento de Segurança:** O projeto reforça a ideia de que a segurança deve ser um ciclo contínuo de testes, análises e melhorias. Cada iteração fornece aprendizados que são fundamentais para evoluir a aplicação.
+
+Esta versão da API deixa claro o quão vulnerável é a transmissão de dados via HTTP puro. Sem a proteção de TLS/SSL, informações sensíveis podem ser facilmente interceptadas, o que representa um grande risco em ambientes de produção.
+
+### Próximos Passos
+
+1. **Implementação de TLS/SSL:** Na próxima versão, a API será configurada co   m HTTPS para criptografar os dados em trânsito, protegendo os usuários contra interceptações maliciosas.
+
+2. **Continuação dos Testes de Segurança:** Após a implementação do HTTPS, os mesmos testes de interceptação serão repetidos com Wireshark para comprovar a eficácia da criptografia.
+
+---
 
 *Vítor – Estudante de Cibersegurança | SOC | Desenvolvimento*

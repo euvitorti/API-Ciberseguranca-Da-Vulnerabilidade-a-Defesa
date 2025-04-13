@@ -31,22 +31,6 @@ namespace API_V2.Users.Controllers
                 // Retorna erro caso algo dê errado no processo
                 return BadRequest(new { message = ex.Message });
             }
-        }
-
-        // Endpoint para buscar todos os usuários cadastrados
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                var users = await _userService.GetAllUsersAsync();
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                // Retorna erro caso a busca falhe
-                return BadRequest(new { message = ex.Message });
-            }
-        }
+        }   
     }
 }

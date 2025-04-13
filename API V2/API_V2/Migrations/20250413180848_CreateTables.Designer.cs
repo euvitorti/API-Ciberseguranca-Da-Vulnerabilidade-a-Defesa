@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_V2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250309180038_FixUserIdAutoIncrement")]
-    partial class FixUserIdAutoIncrement
+    [Migration("20250413180848_CreateTables")]
+    partial class CreateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

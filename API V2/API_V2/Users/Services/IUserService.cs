@@ -6,6 +6,6 @@ namespace API_V2.Users.Services
     public interface IUserService
     {
         Task RegisterUser(RegisterDto registerDto);
-        Task<List<User>> GetAllUsersAsync();
+        // Task<List<User>> GetAllUsersAsync();
     }
 }

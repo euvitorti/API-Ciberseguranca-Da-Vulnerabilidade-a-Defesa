@@ -6,6 +6,12 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configura o Kestrel para escutar em todas as interfaces na porta 5000
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(System.Net.IPAddress.Any, 5000); // Substitua 5000 pela porta desejada
+});
+
 // Obtém a string de conexão do appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
@@ -33,19 +39,19 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Minha API",
-        Version = "v1"
+        Version = "V2"
     });
 });
 
 var app = builder.Build();
 
-// Habilita o Swagger apenas em ambiente de desenvolvimento
+// Habilita o Swagger apenas em ambiente de desenvolvimento 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API_V2 HTTP SEM CRIPTOGRAFIA");
         c.RoutePrefix = string.Empty; // Deixa o Swagger na página principal
     });
 }
