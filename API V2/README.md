@@ -38,10 +38,10 @@ A API possui apenas um endpoint principal definido na classe UserController.cs n
 
 1. Esteja rodando na máquina hospedeira o projeto e no seu ambiente linux, rode o comando:
 
-```
+```bash
     curl -X POST http://192.168.56.1:5000/api/user/register \
     -H "Content-Type: application/json" \
-    -d '{"name":"kali","password":"kali123","email":"naoexiste@gmail.com"}'
+    -d '{"name":"zerotrust","password":"zerotrust","email":"zerotrust@example.com"}'
 ```
 
 Este comando simula uma requisição de registro de usuário, enviando dados sensíveis (nome, senha, email) em formato JSON por HTTP.
@@ -59,6 +59,8 @@ Este comando simula uma requisição de registro de usuário, enviando dados sen
     - Senha
     - Email
 
+- <img src="img/wireshark.png" alt="Imagem 6" />
+
 - **Risco Detectado:** Como os dados trafegam sem nenhuma proteção, qualquer pessoa com acesso à rede pode interceptar e visualizar informações confidenciais.
 
 ---
@@ -75,7 +77,7 @@ Esta versão da API deixa claro o quão vulnerável é a transmissão de dados v
 
 ### Próximos Passos
 
-1. **Implementação de TLS/SSL:** Na próxima versão, a API será configurada co   m HTTPS para criptografar os dados em trânsito, protegendo os usuários contra interceptações maliciosas.
+1. **Implementação de TLS/SSL:** Na próxima versão, a API será configurada com HTTPS para criptografar os dados em trânsito, protegendo os usuários contra interceptações maliciosas.
 
 2. **Continuação dos Testes de Segurança:** Após a implementação do HTTPS, os mesmos testes de interceptação serão repetidos com Wireshark para comprovar a eficácia da criptografia.
 

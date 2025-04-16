@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CibersegurancaAPI_V1_SemProtecao")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7b67ce79a783b715ca2a21ec57d4f325f8d6840")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89cd27d2767410112d5e6c45de02cd60668906c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("CibersegurancaAPI_V1_SemProtecao")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CibersegurancaAPI_V1_SemProtecao")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

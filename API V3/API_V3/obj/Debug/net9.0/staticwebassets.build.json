@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "FiKhkBZDMafUvWOXSH2p2dDJE92Ta1g7HGn6jBRM56Q=",
+  "Source": "API_V3",
+  "BasePath": "_content/API_V3",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
