@@ -12,7 +12,7 @@ builder.WebHost.ConfigureKestrel(options =>
     // Substitua 5000 pela porta desejada e usa um certificado autoassinado
     options.Listen(System.Net.IPAddress.Any, 5000, listenOptions =>
     {
-        listenOptions.UseHttps("seuCertificado.pfx", "suaSenha");
+        listenOptions.UseHttps("apihttps.pfx", "bananadaprata");
     });
 });
 

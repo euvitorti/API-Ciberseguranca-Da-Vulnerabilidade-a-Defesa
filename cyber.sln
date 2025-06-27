@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa", "API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa", "{3199AC14-25EB-3E29-B7B5-84560FDE5029}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API V1 - Sem Proteção", "API V1 - Sem Proteção", "{98BBBDCE-56DA-CD74-8C4E-4765B6FCCF7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CibersegurancaAPI_V1_SemProtecao", "API-Ciberseguranca-Da-Vulnerabilidade-a-Defesa\API V1 - Sem Proteção\CibersegurancaAPI_V1_SemProtecao\CibersegurancaAPI_V1_SemProtecao.csproj", "{6FC663D1-81BA-F354-2E56-A365F983D8C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FC663D1-81BA-F354-2E56-A365F983D8C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC663D1-81BA-F354-2E56-A365F983D8C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC663D1-81BA-F354-2E56-A365F983D8C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC663D1-81BA-F354-2E56-A365F983D8C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{98BBBDCE-56DA-CD74-8C4E-4765B6FCCF7F} = {3199AC14-25EB-3E29-B7B5-84560FDE5029}
+		{6FC663D1-81BA-F354-2E56-A365F983D8C7} = {98BBBDCE-56DA-CD74-8C4E-4765B6FCCF7F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A081B1CE-255B-4FCA-9B93-DA7658172720}
+	EndGlobalSection
+EndGlobal

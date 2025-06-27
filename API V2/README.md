@@ -41,7 +41,7 @@ A API possui apenas um endpoint principal definido na classe UserController.cs n
 ```bash
     curl -X POST http://192.168.56.1:5000/api/user/register \
     -H "Content-Type: application/json" \
-    -d '{"name":"zerotrust","password":"zerotrust","email":"zerotrust@example.com"}'
+    -d '{"name":"admin","password":"admin","email":"zeroadmintrust@example.com"}'
 ```
 
 Este comando simula uma requisição de registro de usuário, enviando dados sensíveis (nome, senha, email) em formato JSON por HTTP.

@@ -9,7 +9,7 @@ namespace API_V2.Users.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
+    
         // Injeta a dependência do serviço de usuário
         public UserController(IUserService userService)
         {
@@ -31,6 +31,26 @@ namespace API_V2.Users.Controllers
                 // Retorna erro caso algo dê errado no processo
                 return BadRequest(new { message = ex.Message });
             }
-        }   
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
+        {
+            try
+            {
+                var token = await _userService.LoginAsync(loginDTO);
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized(new { message = "Usuário ou senha inválidos" });
+                }
+
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
     }
 }

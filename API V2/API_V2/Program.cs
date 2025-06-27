@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+
 using API_V2.Users.Services;
 using API_V2.Users.Repository;
 using API_V2.Data;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Listen(System.Net.IPAddress.Any, 5000); // Substitua 5000 pela porta desejada
+});
+
+// Configura o rate limiter
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: key => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10, // 10 requisições
+                Window = TimeSpan.FromSeconds(30), // por 30 segundos
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0 // sem fila
+            }));
+
+    options.RejectionStatusCode = 429; // Too Many Requests
 });
 
 // Obtém a string de conexão do appsettings.json
@@ -44,6 +65,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+app.UseRateLimiter(); // Habilita o middleware
 
 // Habilita o Swagger apenas em ambiente de desenvolvimento 
 if (app.Environment.IsDevelopment())
